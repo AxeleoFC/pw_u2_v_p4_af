@@ -1,8 +1,6 @@
 <template>
     <img v-if="imagen" :src="imagen" alt="No se puede presentar la imagen">
-    <div class="noEntendi_bg">
-
-    </div>
+    <div class="noEntendi_bg"></div>
     <div class="contenedor">
         <h1 class="titulo">Caracola Magica</h1>
         <input type="text" placeholder="Pregunta a la caracola magica" v-model="pregunta">
@@ -26,9 +24,9 @@ export default {
     },
     watch:{
         pregunta(value, oldValue){
-            console.log(oldValue);
-            console.log(value);
             if(value.includes('?')){
+                this.pregunta=''
+                this.respuesta='Espere la pagina......'
                 this.consumirAPI();
                 
             }
@@ -77,4 +75,5 @@ p{
     font-size: 20px;
     margin-top: 10px;
 }
+
 </style>

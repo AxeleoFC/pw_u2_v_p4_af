@@ -1,15 +1,15 @@
 <template>
-  <CaracolaMagica></CaracolaMagica>
+  <PaginaPoke></PaginaPoke>
 </template>
 
 <script>
-import Contador from './components/Contador.vue';
-import CaracolaMagica from './components/CaracolaMagica.vue';
+import PokemonPaginaVue from './modules/pokemon/page/PokemonPagina.vue'
+PokemonPaginaVue
+
 export default {
   name: 'App',
   components: {
-    Contador,
-    CaracolaMagica
+    PaginaPoke
   }
 }
 </script>
