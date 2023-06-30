@@ -1,16 +1,21 @@
 <template>
   <div class="contenedor">
     <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
+      <li v-for="obj in opciones" :key="obj.id">
+        {{ obj.nombre }}
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
+  props:{
+    opciones:{
+      type:Array,
+      required:true
+    }
+  }
 
 }
 </script>
