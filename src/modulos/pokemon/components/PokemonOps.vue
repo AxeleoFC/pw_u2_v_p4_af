@@ -1,7 +1,7 @@
 <template>
   <div class="contenedor">
     <ul>
-      <li v-for="obj in opciones" :key="obj.id">
+      <li v-for="obj in opciones" :key="obj.id" @click="$emit('seleccionado', obj.id)">
         {{ obj.nombre }}
       </li>
     </ul>
@@ -14,6 +14,10 @@ export default {
     opciones:{
       type:Array,
       required:true
+    },
+  }, methods:{
+    pruebadeEvento(){
+      console.log("Entro en prueba")
     }
   }
 
@@ -26,6 +30,7 @@ ul{
 }
 li{
   border: 3px solid black;
+  color: azure;
   border-radius: 5px;
   background-color: brown;
   margin-bottom: 10px;
