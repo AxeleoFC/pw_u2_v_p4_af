@@ -1,11 +1,19 @@
 <template>
     <h1 v-if="!pokeCorrecto">Espere por favor.........</h1>
     <div v-else>
+        <div class="contenedor-labels">
+            <label>Puntaje: {{ puntaje }}</label>
+            <label>intento: {{ intentos }}</label>
+        </div>
         <h1>Juego Pokemon</h1>
         <PokemonImg :pokemonID="pokeCorrecto.id" :muestraPokemon="mostarPokemon"></PokemonImg>
         <PokemonOps :opciones="list" @seleccionado="revisarRespuesta($event)"></PokemonOps>
     </div>
-    <button @click="cargaPokemons()">Actualizar imagen</button>
+    <div :class="ganar" v-if="finJuego">
+        <label v-text="resultado"></label>
+        <label v-text="premio"></label>
+        <button @click="reiniciar()">Nuevo juego</button>
+    </div>
 </template>
 
 <script>
@@ -18,7 +26,13 @@ export default {
         return {
             list: [],
             pokeCorrecto: null,
-            mostarPokemon:false
+            mostarPokemon: false,
+            intentos: 0,
+            puntaje: 0,
+            resultado: "",
+            finJuego: false,
+            premio: "",
+            gana: false,
         };
     },
     components: {
@@ -32,13 +46,55 @@ export default {
             const indice = Math.floor(Math.random() * 4);
             this.pokeCorrecto = this.list[indice];
         },
-        revisarRespuesta(idSeleccionado){
-            if(idSeleccionado==this.pokeCorrecto.id){
-                this.mostarPokemon=true;
-            }else{
-                this.mostarPokemon=false;
+        comprobar(idSeleccionado) {
+            if (idSeleccionado == this.pokeCorrecto.id) {
+                this.mostarPokemon = true;
+                this.finJuego = true;
+                if (this.intentos == 3) {
+                    this.puntaje = 1;
+                } else if (this.intentos == 2) {
+                    this.puntaje = 3;
+                } else if (this.intentos == 1) {
+                    this.puntaje = 5;
+                }
+                this.obtenerResultado();
+            } else {
+                this.mostarPokemon = false;
             }
-        }
+            
+        }, async revisarRespuesta(idSeleccionado) {
+            if (this.intentos < 3 && this.finJuego != true) {
+                this.intentos++;
+                this.comprobar(idSeleccionado);
+            } else {
+                this.obtenerResultado();
+            }
+        }, async reiniciar() {
+            await this.cargaPokemons();
+            this.mostarPokemon = false;
+            this.finJuego = false;
+            this.intentos = 0;
+            this.puntaje = 0;
+        }, obtenerResultado() {
+            this.finJuego = true;
+            if (this.puntaje > 0) {
+                this.gana = true;
+                this.resultado = "Puntaje: " + this.puntaje;
+                this.premio = "Felicitaciones has ganado.";
+            } else {
+                this.gana = false;
+                this.resultado = "Haz utilizado tus 3 intentos";
+                this.premio = "El juego ha termindo, intentalo nuevamente";
+            }
+        }, computed: {
+            ganar() {
+                if (this.gana) {
+                    return "ganar";
+                } else {
+                    return "perder";
+                }
+            },
+        },
     },
     mounted() {
         this.cargaPokemons();
@@ -46,4 +102,33 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.contenedor-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.ganar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: blue;
+}
+.perder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: red;
+}
+label {
+  font-weight: bold;
+  margin: 10px;
+}
+button {
+  border: 2px solid black;
+}
+button:hover {
+  background-color: aqua;
+}
+</style>
