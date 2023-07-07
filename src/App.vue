@@ -1,15 +1,17 @@
 <template>
-  <PaginaPoke></PaginaPoke>
+  <NavBar></NavBar>
+  <router-view></router-view>
 </template>
 
 <script>
-import PaginaPoke from './modulos/pokemon/page/PaginaPoke.vue';
+import NavBar from './modulos/pokemon/components/NavBar.vue';
 
 export default {
   name: 'App',
-  components: {
-    PaginaPoke
+  components:{
+    NavBar
   }
+  
 }
 </script>
 

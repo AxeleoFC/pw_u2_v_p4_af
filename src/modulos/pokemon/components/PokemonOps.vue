@@ -17,7 +17,7 @@ export default {
     },
   }, methods:{
     pruebadeEvento(){
-      console.log("Entro en prueba")
+      console.log("Entro en prueba");
     }
   }
 
