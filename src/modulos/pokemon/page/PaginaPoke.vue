@@ -1,6 +1,6 @@
 <template>
     <h1 v-if="!pokeCorrecto">Espere por favor.........</h1>
-    <div v-else>
+    <div v-else class="fondo">
         <div class="contenedor-labels">
             <label>Puntaje: {{ puntaje }}</label>
             <label>intento: {{ intentos }}</label>
@@ -13,15 +13,21 @@
         <label v-text="resultado"></label>
         <label v-text="premio"></label>
         <button @click="reiniciar()">Nuevo juego</button>
+
     </div>
+    <PokemonRedireccion></PokemonRedireccion>
 </template>
 
 <script>
 import PokemonImg from "../components/PokemonImg.vue";
 import PokemonOps from "../components/PokemonOps.vue";
 import obtenerFachadaPoke from "../helpers/clientePokemonAPI.js";
+import PokemonRedireccion from '../components/PokemonRedireccion.vue';
 
 export default {
+    components: {
+        PokemonRedireccion
+    },
     data() {
         return {
             list: [],
@@ -61,7 +67,7 @@ export default {
             } else {
                 this.mostarPokemon = false;
             }
-            
+
         }, async revisarRespuesta(idSeleccionado) {
             if (this.intentos < 3 && this.finJuego != true) {
                 this.intentos++;
@@ -86,49 +92,58 @@ export default {
                 this.resultado = "Haz utilizado tus 3 intentos";
                 this.premio = "El juego ha termindo, intentalo nuevamente";
             }
-        }, computed: {
-            ganar() {
-                if (this.gana) {
-                    return "ganar";
-                } else {
-                    return "perder";
-                }
-            },
-        },
+        }
     },
     mounted() {
         this.cargaPokemons();
+    }, computed: {
+        ganar() {
+            if (this.gana) {
+                return "ganar";
+            } else {
+                return "perder";
+            }
+        },
     },
 };
 </script>
 
 <style scoped>
 .contenedor-horizontal {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
+
 .ganar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: blue;
 }
+
 .perder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: red;
 }
+
 label {
-  font-weight: bold;
-  margin: 10px;
+    font-weight: bold;
+    margin: 10px;
 }
+
 button {
-  border: 2px solid black;
+    border: 2px solid black;
 }
+
 button:hover {
-  background-color: aqua;
+    background-color: aqua;
+}
+.fondo{
+    background-image: url('../img/fondo.jpg');
+    background-size: 100% 100%;
 }
 </style>

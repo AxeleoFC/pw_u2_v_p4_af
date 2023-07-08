@@ -1,14 +1,16 @@
 <template>
-  <PaginaPoke></PaginaPoke>
+  <PokemonRedireccion></PokemonRedireccion>
+  <router-view></router-view>
 </template>
 
 <script>
-import PaginaPoke from './modulos/pokemon/page/PaginaPoke.vue';
-
+import PaginaInicial from './modulos/pokemon/page/PaginaInicial.vue';
+import PokemonRedireccion from './modulos/pokemon/components/PokemonRedireccion.vue';
 export default {
   name: 'App',
-  components: {
-    PaginaPoke
+  components:{
+    PaginaInicial,
+    PokemonRedireccion
   }
 }
 </script>
@@ -19,7 +21,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #865d1f;
   margin-top: 60px;
 }
 </style>
